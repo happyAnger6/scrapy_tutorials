@@ -64,10 +64,12 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'tutorials.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'tutorials.pipelines.MongoPipeline': 300,
+}
 
+MONGO_URI = 'mongodb://localhost:27017'
+MONGO_DATABASE = 'db_lianjia'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

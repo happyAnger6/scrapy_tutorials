@@ -19,9 +19,18 @@ class BjljiaSpider(CrawlSpider):
 
     #分析一个具体房源页面的信息
     def parse_one_house_info(self,response):
+        def deal_item(item):
+            new_item = HouseItem()
+            for key,value in item.items():
+                if isinstance(value,list):
+                    new_item[key] = value[0]
+                else:
+                    new_item[key] = value
+            return new_item
+
         item = HouseItem()
         content = response.css("div[class='content']")
-        item['page_url'] = response._get_url
+        item['page_url'] = response._get_url()
         item['total_price'] =  content.css("span[class='total']::text").extract()
         item['unit_price'] = content.css("span[class='unitPriceValue']::text").extract()
         item['down_payment'] = content.css("div[class='tax'] span::text")[0].extract()
@@ -32,7 +41,7 @@ class BjljiaSpider(CrawlSpider):
         item['house_area'] = content.css("div[class='area']").css("div[class='mainInfo']::text").extract()
         item['house_year'] = content.css("div[class='area']").css("div[class='subInfo']::text").extract()
         item['community_name'] =  content.css("div[class='aroundInfo']").css("div[class='communityName']").css("a[class='info']::text").extract()
-        print("FIND A ITEM",item)
+        return deal_item(item)
 """
     def parse(self, response):
         #print("parse url:%s"%response.url)
