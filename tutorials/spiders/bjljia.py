@@ -22,7 +22,7 @@ class BjljiaSpider(CrawlSpider):
         def deal_item(item):
             new_item = HouseItem()
             for key,value in item.items():
-                if isinstance(value,list):
+                if isinstance(value,list) and value:
                     new_item[key] = value[0]
                 else:
                     new_item[key] = value
@@ -41,6 +41,15 @@ class BjljiaSpider(CrawlSpider):
         item['house_area'] = content.css("div[class='area']").css("div[class='mainInfo']::text").extract()
         item['house_year'] = content.css("div[class='area']").css("div[class='subInfo']::text").extract()
         item['community_name'] =  content.css("div[class='aroundInfo']").css("div[class='communityName']").css("a[class='info']::text").extract()
+        item['area_name'] = content.css("a[class='supplement']::text").extract()
+        item['school_name'] = content.css("div[class='schoolName']").css("span[style]::text").extract()
+        intro_content = response.css("div[class='introContent']")
+        item['house_begin_sell'] = intro_content.css("div[class='transaction']").css("div[class='content'] li::text")[0].extract()
+        item['house_transacton'] = intro_content.css("div[class='transaction']").css("div[class='content'] li::text")[1].extract()
+        item['house_purpose'] = intro_content.css("div[class='transaction']").css("div[class='content'] li::text")[3].extract()
+        item['house_full_five'] = intro_content.css("div[class='transaction']").css("div[class='content'] li::text")[4].extract()
+        item['house_unique'] = intro_content.css("div[class='transaction']").css("div[class='content'] li::text")[6].extract()
+        item['morgage'] = intro_content.css("div[class='transaction']").css("div[class='content'] li::text")[8].extract()
         return deal_item(item)
 """
     def parse(self, response):

@@ -28,6 +28,8 @@ class HouseItem(scrapy.Item):
     house_decorate = scrapy.Field() #装修
     house_area = scrapy.Field() #面积
     house_fact_area = scrapy.Field() #实际面积
+    house_begin_sell = scrapy.Field() #挂牌时间
+    house_purpose = scrapy.Field() #房屋用途
     house_transacton = scrapy.Field() #交易权属
     house_full_five = scrapy.Field() #满5年
     house_unique = scrapy.Field() #是否唯一
