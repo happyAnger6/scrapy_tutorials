@@ -15,6 +15,16 @@ class DmozItem(scrapy.Item):
     link = scrapy.Field()
     desc = scrapy.Field()
     
+class CjHouseItem(scrapy.Item):
+    page_url = scrapy.Field() #url
+    title = scrapy.Field() #小区 大小
+    house_info = scrapy.Field() #朝向 装修
+    deal_data = scrapy.Field() #成交日期
+    total_price = scrapy.Field() #总价
+    position_icon = scrapy.Field() #低楼层 2007年 塔楼
+    unit_price = scrapy.Field() #单价
+    deal_house_txt = scrapy.Field() #满5年
+    sell_flag = scrapy.Field()
 
 class HouseItem(scrapy.Item):
     total_price = scrapy.Field() #总价
@@ -37,6 +47,7 @@ class HouseItem(scrapy.Item):
     area_name = scrapy.Field() #地理位置
     school_name = scrapy.Field() #学校
     morgage = scrapy.Field() #是否抵押
+    sell_flag = scrapy.Field()
     page_url = scrapy.Field()
 
 

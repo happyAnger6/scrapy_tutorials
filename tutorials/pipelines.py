@@ -13,6 +13,7 @@ class TutorialsPipeline(object):
 
 class MongoPipeline(object):
     collection_name = 'scrapy_ershoufang_items'
+    collection_name1 = 'scrapy_cj_ershoufang_items'
 
     def __init__(self,mongo_uri,mongo_db):
         self.mongo_uri = mongo_uri
@@ -34,5 +35,8 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self,item,spider):
-        self.db[self.collection_name].insert(dict(item))
+        if item['sell_flag']:
+            self.db[self.collection_name1].insert(dict(item))
+        else:
+            self.db[self.collection_name].insert(dict(item))
         return item
