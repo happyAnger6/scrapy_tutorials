@@ -5,6 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+from .spiders.zlzp import ZlzpSpider
+from .spiders.wyjob import WyjobSpider
 import pymongo
 
 class TutorialsPipeline(object):
@@ -14,6 +16,7 @@ class TutorialsPipeline(object):
 class MongoPipeline(object):
     collection_name = 'scrapy_ershoufang_items'
     collection_name1 = 'scrapy_cj_ershoufang_items'
+    zlzp_collection_name = 'scrapy_zlzp_info'
 
     def __init__(self,mongo_uri,mongo_db):
         self.mongo_uri = mongo_uri
@@ -35,8 +38,11 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self,item,spider):
-        if item['sell_flag']:
-            self.db[self.collection_name1].insert(dict(item))
+        if isinstance(spider,ZlzpSpider) or isinstance(spider,WyjobSpider):
+            self.db[self.zlzp_collection_name].insert(dict(item))
         else:
-            self.db[self.collection_name].insert(dict(item))
+            if item.get('sell_flag'):
+                self.db[self.collection_name1].insert(dict(item))
+            else:
+                self.db[self.collection_name].insert(dict(item))
         return item

@@ -7,6 +7,22 @@
 
 import scrapy
 
+class ZlzpItem(scrapy.Item):
+    zwmc = scrapy.Field() #职位名称
+    zwyx = scrapy.Field() #职位月薪
+    zwnx = scrapy.Field() #职位年薪
+    gzdd = scrapy.Field() #工作地点
+    fbrq = scrapy.Field() #发布日期
+    gzjy = scrapy.Field() #工作经验
+    zdxl = scrapy.Field() #最低学历
+    gzxz = scrapy.Field() #工作性质
+    zwlb = scrapy.Field() #职位类别
+    gsmc = scrapy.Field() #公司名称
+    gsgm = scrapy.Field() #公司规模
+    gsxz = scrapy.Field() #公司性质
+    gshy = scrapy.Field() #公司行业
+    gszy = scrapy.Field() #公司主页
+    gsdz = scrapy.Field() #公司地址
 
 class DmozItem(scrapy.Item):
     # define the fields for your item here like:
