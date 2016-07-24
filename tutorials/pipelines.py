@@ -7,6 +7,7 @@
 
 from .spiders.zlzp import ZlzpSpider
 from .spiders.wyjob import WyjobSpider
+from .spiders.zbtong import ZbtongSpider
 import pymongo
 
 class TutorialsPipeline(object):
@@ -38,7 +39,7 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self,item,spider):
-        if isinstance(spider,ZlzpSpider) or isinstance(spider,WyjobSpider):
+        if isinstance(spider,ZlzpSpider) or isinstance(spider,WyjobSpider) or isinstance(spider,ZbtongSpider):
             self.db[self.zlzp_collection_name].insert(dict(item))
         else:
             if item.get('sell_flag'):
