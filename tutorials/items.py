@@ -23,6 +23,7 @@ class ZlzpItem(scrapy.Item):
     gshy = scrapy.Field() #公司行业
     gszy = scrapy.Field() #公司主页
     gsdz = scrapy.Field() #公司地址
+    url = scrapy.Field() #页面地址
 
 class DmozItem(scrapy.Item):
     # define the fields for your item here like:

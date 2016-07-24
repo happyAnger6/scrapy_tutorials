@@ -34,6 +34,7 @@ class ZbtongSpider(CrawlSpider):
 
         print("parse_one_job url:",response.url)
         item = ZlzpItem()
+        item['url'] = response.url
         item['zwyx'] = do_item(response.css('span[class="r"] ::text').extract()[1])
         item['gzdd'] = do_item(response.css('div[class="box enterprise-base"] p[data-reactid]::text').extract()[1])
         item['zwlb'] = do_item(response.css('h2::text').extract()[0])
