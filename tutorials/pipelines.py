@@ -18,7 +18,7 @@ class TutorialsPipeline(object):
 class MongoPipeline(object):
     collection_name = 'scrapy_ershoufang_items'
     collection_name1 = 'scrapy_cj_ershoufang_items'
-    zlzp_collection_name = 'scrapy_zlzp_info'
+    zp_collection_name = 'zp_info_table'
 
     def __init__(self,mongo_uri,mongo_db):
         self.mongo_uri = mongo_uri
@@ -40,11 +40,5 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self,item,spider):
-        if isinstance(spider,ZlzpSpider) or isinstance(spider,WyjobSpider) or isinstance(spider,ZbtongSpider) or isinstance(spider,NeituiSpider):
-            self.db[self.zlzp_collection_name].insert(dict(item))
-        else:
-            if item.get('sell_flag'):
-                self.db[self.collection_name1].insert(dict(item))
-            else:
-                self.db[self.collection_name].insert(dict(item))
+        self.db[self.zp_collection_name].insert(dict(item))
         return item

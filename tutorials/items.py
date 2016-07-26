@@ -7,6 +7,23 @@
 
 import scrapy
 
+class ZpItem(scrapy.Item):
+    url = scrapy.Field()
+    zwmc = scrapy.Field()
+    zwfl = scrapy.Field()
+    zwyx = scrapy.Field()
+    yx_low = scrapy.Field()
+    yx_high = scrapy.Field()
+    yx_avg = scrapy.Field()
+    gsmc = scrapy.Field()
+    gsdz = scrapy.Field()
+    gzdd = scrapy.Field()
+    gzjy = scrapy.Field()
+    xl = scrapy.Field()
+    jy_low = scrapy.Field()
+    jy_high = scrapy.Field()
+    jy_avg = scrapy.Field()
+
 class ZlzpItem(scrapy.Item):
     zwmc = scrapy.Field() #职位名称
     zwyx = scrapy.Field() #职位月薪

@@ -69,7 +69,7 @@ ITEM_PIPELINES = {
 }
 
 MONGO_URI = 'mongodb://localhost:27017'
-MONGO_DATABASE = 'db_lianjia'
+MONGO_DATABASE = 'db_zp'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
