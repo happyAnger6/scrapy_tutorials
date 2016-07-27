@@ -57,7 +57,7 @@ class ZlzpSpider(CrawlSpider):
                 avg = (low+high)/2
                 return [low,high,avg]
             except Exception as e:
-                print('a exception jy:%s e:%s'%(jy,e))
+                self.logger.error('a exception jy:%s e:%s',jy,e)
                 return [0,0,0]
 
         def parse_yx(yx):
@@ -81,17 +81,18 @@ class ZlzpSpider(CrawlSpider):
                 avg = (low+high)/2
                 return [low,high,avg]
             except Exception as e:
-                print('a exception yx:%s e:%s'%(yx,e))
+                self.logger.error('a exception yx:%s e:%s',yx,e)
                 return [0,0,0]
         try:
             items = response.css('ul[class="terminal-ul clearfix"] li')
             item = ZpItem()
             item['url'] = response.url
+            item['zwmc'] = do_item(response.css("div[class='fixed-inner-box'] h1::text").extract())
             item['zwyx'] = do_item(items[0].css('strong::text').extract())
             item['gzdd'] = do_item(items[1].css('a::text').extract())
             item['gzjy'] = do_item(items[4].css('strong::text').extract())
             item['xl'] = do_item(items[5].css('strong::text').extract())
-            item['zwmc'] = do_item(items[7].css('a::text').extract())
+            item['zmlb'] = do_item(items[7].css('a::text').extract())
             company_info = response.css('div[class="company-box"]')
             item['gsmc'] = do_item(company_info.css("p[class='company-name-t'] a::text").extract())
             #company_detail = response.css('ul[class="terminal-ul clearfix terminal-company mt20"] li')
@@ -100,7 +101,7 @@ class ZlzpSpider(CrawlSpider):
             for mc,jy in zip(['jy_low','jy_high','jy_avg'],parse_yx(item['gzjy'])):
                 item[mc] = jy
         except Exception as e:
-            print("parse url:%s err e:%e"%(response.url,e))
+            self.logger.error("parse url:%s err e:%s",response.url,e)
         #print("fetch a job info:%s from url:%s"%(dict(item),response.url))
         return item
 

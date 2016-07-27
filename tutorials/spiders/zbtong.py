@@ -12,7 +12,7 @@ from scrapy.spider import CrawlSpider,Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.http import HtmlResponse
 
-from ..items import ZlzpItem
+from ..items import ZpItem
 class ZbtongSpider(CrawlSpider):
     name = "zbtong"
     #allowed_domains = ["www.51job.com"]
@@ -32,13 +32,43 @@ class ZbtongSpider(CrawlSpider):
                 return item[0]
             return item
 
-        print("parse_one_job url:",response.url)
-        item = ZlzpItem()
-        item['url'] = response.url
-        item['zwyx'] = do_item(response.css('span[class="r"] ::text').extract()[1])
-        item['gzdd'] = do_item(response.css('div[class="box enterprise-base"] p[data-reactid]::text').extract()[1])
-        item['zwlb'] = do_item(response.css('h2::text').extract()[0])
-        item['gsmc'] = do_item(response.css('div[class="box enterprise-base"] p[data-reactid]::text').extract()[0])
+        def parse_yx(yx):
+            max_add = 10000
+            try:
+                yx = yx.replace(',','')
+                if yx.rfind('-'):
+                    import re
+                    rec=re.compile('([0-9 ]*)-([0-9 ]*)')
+                    m = rec.match(yx)
+                    if m:
+                        low = float(m.group(1))
+                        high = float(m.group(2))
+                elif yx.rfind('以下'):
+                    high =  float(yx[:yx.rfind("元")])
+                    low = 0
+                elif yx.rfind('以上'):
+                    low = float(yx[:yx.rfind("元")])
+                    high = low + max_add
+                else:
+                    low = hight = 0
+                avg = (low+high)/2
+                return [low,high,avg]
+            except Exception as e:
+                self.logger.error('a exception yx:%s e:%s',yx,e)
+                return [0,0,0]
+        try:
+            item = ZpItem()
+            item['url'] = response.url
+            item['zwyx'] = do_item(response.css('span[class="r"] ::text').extract()[1])
+            item['gzdd'] = do_item(response.css('div[class="box enterprise-base"] p[data-reactid]::text').extract()[1])
+            item['zwmc'] = do_item(response.css('h2::text').extract()[0])
+            item['gsmc'] = do_item(response.css('div[class="box enterprise-base"] p[data-reactid]::text').extract()[0])
+            item['xl'] = do_item(response.css("div[class='tags'] span::text")[2].extract())
+            for mc,yx in zip(['yx_low','yx_high','yx_avg'],parse_yx(item['zwyx'])):
+                item[mc] = yx
+        except Exception as e:
+            self.logger.error("fetch url:%s err:%s",response.url,e)
+            return []
         return item
 
 
