@@ -47,7 +47,7 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'tutorials.middlewares.MyCustomSpiderMiddleware': 100,
+ #   'tutorials.middlewares.MyCustomSpiderMiddleware': 710,
 #}
 
 # Enable or disable downloader middlewares

@@ -18,7 +18,7 @@ class HighpinSpider(CrawlSpider):
     name = "highpin"
     #allowed_domains = ["www.zhaopin.com/"]
     start_urls = (
-        'http://www.highpin.com',
+        'http://www.highpin.cn',
     )
 
     rules = (
