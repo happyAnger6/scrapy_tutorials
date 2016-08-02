@@ -4,22 +4,26 @@ import pymongo
 import re
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from matplotlib.pyplot import savefig
 
 import sys
 sys.path.append('..')
 
-DB_HOSTNAME="192.168.17.128"
+DB_HOSTNAME="192.168.0.2"
 DB_DATABASE="db_zp"
 DB_TABLE_NAME="zp_info_table"
+
+#print(fm.FontProperties('/usr/share/fonts/truetype/wqy/wqy-microhei.ttc').get_family())
 
 from dbase.db import DbHandle
 
 def _set_ch():
 	from pylab import mpl
-	mpl.rcParams['font.sans-serif'] = ['SimHei'] #指定默认字体
-
+	mpl.rcParams['font.family'] = ['/usr/share/fonts/truetype/wqy/wqy-microhei.ttc']  #指定默认字体
 	mpl.rcParams['axes.unicode_minus'] = False #解决保存图像是负号'-'显示为方块的问题
 
 def get_data_from_mongo():

@@ -7,6 +7,16 @@
 
 import scrapy
 
+class NewsItem(scrapy.Item):
+    url = scrapy.Field()
+    title = scrapy.Field()
+    publish = scrapy.Field()
+    involves = scrapy.Field()
+    comments = scrapy.Field()
+    keywords = scrapy.Field()
+    pic_title = scrapy.Field()
+    author = scrapy.Field()
+
 class ZpItem(scrapy.Item):
     url = scrapy.Field()
     zwmc = scrapy.Field()

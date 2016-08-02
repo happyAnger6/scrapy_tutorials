@@ -17,4 +17,4 @@ if __name__ == "__main__":
     #zp_show_oneZw_xlCounts_Bar('大数据','./1.jpg')
     #zp_show_oneZw_gzddCounts_Pie('模特','./1.jpg')
     #zp_show_oneZw_gzjyCounts_Pie('打字','./1.jpg')
-    zp_show_oneZw_xlCounts_Pie('Java','./1.jpg')
+    zp_show_oneZw_xlCounts_Bar('Java','./1.jpg')

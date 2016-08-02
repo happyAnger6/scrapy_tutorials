@@ -4,7 +4,7 @@ import pymongo
 
 class DbHandle:
     def __init__(self,hostname,db,collection,port=27017):
-        self.conn = pymongo.Connection('192.168.17.128',port)
+        self.conn = pymongo.Connection(hostname,port)
         self.db = self.conn[db]
         self.collection = collection
 

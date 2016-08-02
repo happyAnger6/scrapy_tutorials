@@ -16,11 +16,9 @@ class LaGouSpider(CrawlSpider):
     name = "lagou"
     allowed_domains = ["www.lagou.com"]
 
-    '''
     start_urls = (
         'http://www.lagou.com/',
     )
-    '''
 
     rules = (
         Rule(LinkExtractor(allow=('lagou',),deny=('[a-zA-Z0-9]*/in[0-9]*_','zhaopin.liebiao.com',
@@ -31,13 +29,6 @@ class LaGouSpider(CrawlSpider):
         super(LaGouSpider, self).__init__(*a, **kw)
         self.driver = webdriver.PhantomJS(executable_path="/usr/bin/phantomjs")
 
-    def start_requests(self):
-        return [scrapy.FormRequest("https://passport.lagou.com/login/login.html",
-                                   formdata={'user':'18600146108','pass':'168888'},
-                                   callback=self.logged_in)]
-
-    def logged_in(self,response):
-        self.down_to_file(response.url,response.body)
 
     def closed(self,reason):
         self.driver.close()
@@ -72,6 +63,15 @@ class LaGouSpider(CrawlSpider):
             if url.startswith('http:'):
                 yield scrapy.Request(url=url,callback=self.parse_one_page)
 
+'''
+    def start_requests(self):
+        return [scrapy.FormRequest("https://passport.lagou.com/login/login.html",
+                                   formdata={'user':'18600146108','pass':'168888'},
+                                   callback=self.logged_in)]
+
+    def logged_in(self,response):
+        self.down_to_file(response.url,response.body)
+'''
 
 """
     def parse(self, response):
