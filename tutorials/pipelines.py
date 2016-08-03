@@ -19,6 +19,7 @@ class MongoPipeline(object):
     collection_name = 'scrapy_ershoufang_items'
     collection_name1 = 'scrapy_cj_ershoufang_items'
     zp_collection_name = 'zp_info_table'
+    oly_collection_name = 'aoyun_news_table'
 
     def __init__(self,mongo_uri,mongo_db):
         self.mongo_uri = mongo_uri
@@ -40,5 +41,5 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self,item,spider):
-        self.db[self.zp_collection_name].insert(dict(item))
+        self.db[self.oly_collection_name].insert(dict(item))
         return item

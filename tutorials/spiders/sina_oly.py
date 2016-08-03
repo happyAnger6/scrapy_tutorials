@@ -69,11 +69,11 @@ class SinaOlySpider(CrawlSpider):
             item['publish'] = do_item(art_info.css("span[id='pub_date']::text").extract())
             item['pic_title'] = do_item(response.css("span[class='img_descr'] ::text").extract())
             item['keywords'] = do_item(response.css("p[class='art_keywords'] a::text").extract())
-            print("parse url:",response.url,item)
+            '''
             filename = response.url.split("/")[-2] + '.html'
             with open(filename,'wb') as f:
                 f.write(response.body)
-
+            '''
         except Exception as e:
             self.logger.error("parse url:%s err:%s",response.url,e)
             return []

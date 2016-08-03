@@ -9,13 +9,13 @@ import scrapy
 
 class NewsItem(scrapy.Item):
     url = scrapy.Field()
-    title = scrapy.Field()
-    publish = scrapy.Field()
-    involves = scrapy.Field()
-    comments = scrapy.Field()
-    keywords = scrapy.Field()
-    pic_title = scrapy.Field()
-    author = scrapy.Field()
+    title = scrapy.Field() #主题
+    publish = scrapy.Field() #发布时间
+    involves = scrapy.Field() #参与人数
+    comments = scrapy.Field() #评论人数
+    keywords = scrapy.Field() #新闻关键词
+    pic_title = scrapy.Field() #图片标题
+    author = scrapy.Field() #文章作者
 
 class ZpItem(scrapy.Item):
     url = scrapy.Field()
