@@ -35,30 +35,6 @@ class SinaOlySpider(CrawlSpider):
                 return item[0]
             return item
 
-        def parse_yx(yx):
-            max_add = 10000
-            try:
-                if yx.rfind('-'):
-                    import re
-                    rec=re.compile('([0-9 ]*)-([0-9 ]*)')
-                    m = rec.match(yx)
-                    if m:
-                        low = float(m.group(1))
-                        high = float(m.group(2))
-                elif yx.rfind('以下'):
-                    high =  float(yx[:yx.rfind("元")])
-                    low = 0
-                elif yx.rfind('以上'):
-                    low = float(yx[:yx.rfind("元")])
-                    high = low + max_add
-                else:
-                    low = hight = 0
-                avg = (low+high)/2
-                return [low,high,avg]
-            except Exception as e:
-                self.logger.error('a exception yx:%s e:%s',yx,e)
-                return [0,0,0]
-
         item = NewsItem()
         try:
             cn = response.css("div[class='cn']")

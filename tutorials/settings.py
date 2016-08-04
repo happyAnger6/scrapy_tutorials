@@ -69,7 +69,7 @@ ITEM_PIPELINES = {
 }
 
 MONGO_URI = 'mongodb://192.168.0.4:27017'
-MONGO_DATABASE = 'db_aoyun'
+MONGO_DATABASE = 'lovelife'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
