@@ -16,6 +16,17 @@ class NewsItem(scrapy.Item):
     keywords = scrapy.Field() #新闻关键词
     pic_title = scrapy.Field() #图片标题
     author = scrapy.Field() #文章作者
+    hot = scrapy.Field() #热度
+
+class SpecItem(scrapy.Item):
+    url = scrapy.Field()
+    kind = scrapy.Field()
+    rank = scrapy.Field()
+    gold = scrapy.Field()
+    silver = scrapy.Field()
+    bronze = scrapy.Field()
+    total = scrapy.Field()
+    country = scrapy.Field()
 
 class ZpItem(scrapy.Item):
     url = scrapy.Field()

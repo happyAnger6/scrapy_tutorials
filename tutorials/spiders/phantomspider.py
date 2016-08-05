@@ -1,5 +1,6 @@
 __author__ = 'zhangxa'
 
+import time
 
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -14,7 +15,6 @@ from ..items import NewsItem
 class PhantomjsSpider(CrawlSpider):
     def __init__(self,*a,**kw):
         super(PhantomjsSpider,self).__init__(*a,**kw)
-        self.driver = webdriver.PhantomJS(executable_path="/usr/bin/phantomjs")
 
 
     name = "sina_oly_phantomjs"
@@ -49,6 +49,10 @@ class PhantomjsSpider(CrawlSpider):
             item['publish'] = do_item(art_info.css("span[id='pub_date']::text").extract())
             item['pic_title'] = do_item(response.css("span[class='img_descr'] ::text").extract())
             item['keywords'] = do_item(response.css("p[class='art_keywords'] a::text").extract())
+            counts = response.css("p[class='post_box_count'] span[class='f_red']::text").extract()
+            item['involves'] = counts[1].replace(',','')
+            item['comments'] = counts[0].replace(',','')
+            item['hot'] = float(item['involves'])*0.3 + float(item['comments'])*0.7
             '''
             filename = response.url.split("/")[-2] + '.html'
             with open(filename,'wb') as f:
@@ -60,9 +64,23 @@ class PhantomjsSpider(CrawlSpider):
         return item
 
     def phantomjs_process(self,request):
-        url = request.url
-        driver = self.driver
-        driver.get(request.url)
-        body = driver.page_source
-        response = HtmlResponse(url,body=body.encode('UTF-8'),request=request)
+        def do_counts(str_counts):
+            try:
+                counts = str_counts.replace(',','')
+                return counts
+            except:
+                return 0
+        def do_item(item):
+            if item and isinstance(item,list):
+                return item[0]
+            return item
+        try:
+            url = request.url
+            driver = webdriver.PhantomJS(executable_path="/usr/bin/phantomjs")
+            driver.get(request.url)
+            body = driver.page_source
+            response = HtmlResponse(url,body=body.encode('UTF-8'),request=request)
+        except Exception as e:
+            self.logger.error("phantomjs error:",e,url)
+            return []
         return self.parse_one_news(response)
