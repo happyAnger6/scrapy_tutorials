@@ -13,7 +13,7 @@ from matplotlib.pyplot import savefig
 import sys
 sys.path.append('..')
 
-DB_HOSTNAME="192.168.0.2"
+DB_HOSTNAME="192.168.0.3"
 DB_DATABASE="db_zp"
 DB_TABLE_NAME="zp_info_table"
 
@@ -22,6 +22,7 @@ DB_TABLE_NAME="zp_info_table"
 from dbase.db import DbHandle
 
 def _set_ch():
+	return
 	from pylab import mpl
 	mpl.rcParams['font.family'] = ['/usr/share/fonts/truetype/wqy/wqy-microhei.ttc']  #指定默认字体
 	mpl.rcParams['axes.unicode_minus'] = False #解决保存图像是负号'-'显示为方块的问题
@@ -103,6 +104,7 @@ def zp_show_bar(results,title='',xlabel='',ylabel='数量',color='red',filename=
 	bar_with = 0.4
 	values = results.values()
 	index = np.arange(len(results))
+	fig = plt.figure(figsize=(8,8))
 	rect = plt.bar(index,values,bar_with,color=color)
 	plt.xlabel(xlabel)
 	plt.ylabel(ylabel)
@@ -110,9 +112,9 @@ def zp_show_bar(results,title='',xlabel='',ylabel='数量',color='red',filename=
 	plt.xticks(index+bar_with,results.keys())
 	_set_ch()
 	if filename:
-		savefig(filename)
+		fig.savefig(filename)
 	else:
-		plt.show()
+		fig.show()
 
 '''
 显示某种职位不同工作地点的数量柱状图
@@ -154,12 +156,13 @@ def zp_show_pie(results,filename='./2.jpg'):
 	draw_colors = []
 	for i in range(len(values)):
 		draw_colors.append(colors[i%len(colors)])
+	fig = plt.figure(figsize=(8,8))
 	plt.pie(values,labels=labels,colors=draw_colors,autopct='%1.2f%%')
 	_set_ch()
 	if filename:
-		savefig(filename)
+		fig.savefig(filename)
 	else:
-		plt.show()
+		fig.show()
 
 #显示某种职位不同工作地点需求量的饼状图
 def zp_show_oneZw_gzddCounts_Pie(yy,filename=''):
