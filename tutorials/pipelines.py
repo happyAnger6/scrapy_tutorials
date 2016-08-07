@@ -12,7 +12,7 @@ from .spiders.wyjob import WyjobSpider
 from .spiders.zbtong import ZbtongSpider
 from .spiders.neitui import NeituiSpider
 
-from .items import SpecItem
+from .items import SpecItem,NewsItem,ZpItem
 
 class TutorialsPipeline(object):
     def process_item(self, item, spider):
@@ -47,8 +47,12 @@ class MongoPipeline(object):
     def process_item(self,item,spider):
         if isinstance(item,SpecItem):
             self.db[self.oly_spec_collection].insert(dict(item))
-        else:
+        elif isinstance(item,NewsItem):
             key_index = item['url']
             if not self.db[self.oly_collection_name].find({'url':key_index}).count():
                 self.db[self.oly_collection_name].insert(dict(item))
+        else:
+            key_index = item['url']
+            if not self.db[self.zp_collection_name].find({'url':key_index}).count():
+                self.db[self.zp_collection_name].insert(dict(item))
         return item
