@@ -35,9 +35,12 @@ class PhantomjsSpider(CrawlSpider):
 
     def parse_one_news(self,response):
         def do_item(item):
+            content = item
             if item and isinstance(item,list):
-                item[0]
-            return item
+                content = item[0]
+            if content:
+                return content.strip()
+            return ""
 
         item = NewsItem()
         try:
