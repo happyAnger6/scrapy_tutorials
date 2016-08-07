@@ -36,15 +36,16 @@ class PhantomjsSpider(CrawlSpider):
     def parse_one_news(self,response):
         def do_item(item):
             if item and isinstance(item,list):
-                return item[0]
+                item[0]
             return item
 
         item = NewsItem()
         try:
             cn = response.css("div[class='cn']")
             item['url'] = response.url
-            item['title'] = do_item(response.css("div[class='blkContainerSblk'] h1::text").extract())
-
+            item['title'] = do_item(response.css("div[class='blkContainerSblk'] font::text").extract())
+            if not item['title']:
+                item['title'] = do_item(response.css("div[class='blkContainerSblk'] h1::text").extract())
             art_info = response.css("div[class='artInfo']")
             item['publish'] = do_item(art_info.css("span[id='pub_date']::text").extract())
             item['pic_title'] = do_item(response.css("span[class='img_descr'] ::text").extract())
